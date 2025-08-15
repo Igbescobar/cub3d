@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 12:57:19 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/15 13:40:22 by igngonza         ###   ########.fr       */
+/*   Created: 2025/08/15 13:18:23 by igngonza          #+#    #+#             */
+/*   Updated: 2025/08/15 13:34:54 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+int	exit_with_error(const char *message)
 {
-	if (parsing_handler(argc, argv) != 0)
-		return (1);
-	return (0);
+	printf("Error\n%s\n", message);
+	return (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 #    By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 12:53:54 by igngonza          #+#    #+#              #
-#    Updated: 2025/08/15 13:06:32 by igngonza         ###   ########.fr        #
+#    Updated: 2025/08/15 13:32:45 by igngonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT_DIR   := libft
 MLX_DIR     := mlx
 
 
-SRC_FILES   := $(wildcard $(SRC_DIR)/*.c)
+SRC_FILES   := $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
 
 OBJ_FILES   := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 

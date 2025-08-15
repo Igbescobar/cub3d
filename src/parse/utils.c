@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 12:57:19 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/15 13:40:22 by igngonza         ###   ########.fr       */
+/*   Created: 2025/08/15 13:20:03 by igngonza          #+#    #+#             */
+/*   Updated: 2025/08/15 13:30:21 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+int	has_cub_extension(const char *filename)
 {
-	if (parsing_handler(argc, argv) != 0)
-		return (1);
-	return (0);
+	const char	*dot = ft_strrchr(filename, '.');
+
+	if (!dot || dot == filename)
+		return (0);
+	return (ft_strncmp(dot, ".cub", 4) == 0);
 }
