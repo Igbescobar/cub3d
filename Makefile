@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+         #
+#    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 12:53:54 by igngonza          #+#    #+#              #
-#    Updated: 2025/08/15 13:32:45 by igngonza         ###   ########.fr        #
+#    Updated: 2025/08/18 13:56:45 by igngonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,15 @@ NAME        := cub3d
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
 IFLAGS      := -Iinclude -Ilibft -Imlx
-MLX_FLAGS := -Lmlx -lmlx -lXext -lX11 -lm -lz
+
+# === Operating System Detection ===
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Linux)
+	MLX_FLAGS := -Lmlx -lmlx -lXext -lX11 -lm -lz
+else ifeq ($(UNAME_S), Darwin)
+	MLX_FLAGS := -Lmlx -lmlx -framework OpenGL -framework AppKit
+endif
 
 SRC_DIR     := src
 OBJ_DIR     := obj
@@ -31,13 +39,16 @@ OBJ_FILES   := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 LIBFT       := $(LIBFT_DIR)/libft.a
 MLX         := $(MLX_DIR)/libmlx.a
 
-# === Frameworks (for macOS only, comment out if not needed) ===
-# MLX_FLAGS   := -Lmlx -lmlx -framework OpenGL -framework AppKit
-
 LD_FLAGS    := $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
 
+all: os_info $(NAME)
 
-all: $(NAME)
+os_info:
+ifeq ($(UNAME_S), Linux)
+	@echo "🐧 Detected Linux - Using X11 libraries"
+else ifeq ($(UNAME_S), Darwin)
+	@echo "🍎 Detected macOS - Using frameworks"
+endif
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ_FILES)
 	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJ_FILES) $(LD_FLAGS) -o $(NAME)
@@ -66,4 +77,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re os_info

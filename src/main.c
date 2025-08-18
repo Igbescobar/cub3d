@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:57:19 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/15 14:04:27 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/18 14:56:26 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	main(int argc, char **argv)
 {
-	int		fd;
-	t_map	map;
-
 	if (parsing_handler(argc, argv) != 0)
 		return (1);
 	return (0);
