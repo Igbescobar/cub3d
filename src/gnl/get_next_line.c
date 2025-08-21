@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:00:35 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/15 14:02:07 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/19 13:54:03 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ char	*read_file(int fd, char *solution_buffer)
 
 char	*get_next_line(int fd)
 {
-	static char *solution_buffer;
-	char *extracted_line;
+	static char	*solution_buffer;
+	char		*extracted_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{

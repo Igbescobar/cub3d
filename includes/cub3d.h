@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/18 15:21:24 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:25:17 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,71 +21,88 @@
 # include <string.h>
 # include <unistd.h>
 
+typedef struct s_config
+{
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	int			floor_color[3];
+	int			ceiling_color[3];
+}				t_config;
+
 typedef struct s_map
 {
-	char	**map;
-	int		map_height;
-	int		map_width;
-}			t_map;
+	char		**map;
+	int			map_height;
+	int			map_width;
+	t_config	config;
+}				t_map;
 
 // ========== Error Handling ==========
-int			exit_with_error(const char *message);
+int				exit_with_error(const char *message);
 
 // ========== Argument Parsing ==========
-int			parsing_handler(int argc, char **argv);
-int			has_cub_extension(const char *filename);
+int				parsing_handler(int argc, char **argv);
+int				has_cub_extension(const char *filename);
 
 // ========== Parsing Sub-functions ==========
-int			validate_argument_count(int argc);
-int			validate_file_extension(const char *filename);
-int			validate_file_access(const char *filename);
-int			load_map_from_file(const char *filename, t_map *map_data);
-int			validate_characters(t_map *map_data);
-int			validate_enclosure(t_map *map_data);
-int			validate_player(t_map *map_data);
-int			run_all_validations(t_map *map_data);
-void		print_success_message(t_map *map_data);
-
-// ========== Map Struct ==========
+int				validate_argument_count(int argc);
+int				validate_file_extension(const char *filename);
+int				validate_file_access(const char *filename);
+int				load_map_from_file(const char *filename, t_map *map_data);
+int				validate_characters(t_map *map_data);
+int				validate_enclosure(t_map *map_data);
+int				validate_player(t_map *map_data);
+int				run_all_validations(t_map *map_data);
+void			print_success_message(t_map *map_data);
 
 // ========== Map Parsing ==========
-int			parse_map(const char *filename, t_map *map_data);
-int			read_map_lines(const char *filename, t_map *map_data);
-void		calculate_map_width(t_map *map_data);
-void		free_map(t_map *map_data);
-int			count_map_lines(const char *filename);
+int				parse_map(const char *filename, t_map *map_data);
+int				read_map_lines(const char *filename, t_map *map_data);
+void			calculate_map_width(t_map *map_data);
+void			free_map(t_map *map_data);
+int				count_map_lines(const char *filename);
+int				is_map_line(char *line);
 
-// ========== Parsing Helper Functions ==========
-int			allocate_map_memory(t_map *map_data);
-int			open_map_file(const char *filename);
-char		*process_line(char *line);
-int			get_line_width(t_map *map_data, int line_index);
-void		update_max_width(t_map *map_data, int current_width);
+// ========== Configuration Parsing ==========
+void			init_config(t_config *config);
+int				parse_config_from_file(const char *filename, t_config *config);
+int				parse_config_line(char *line, t_config *config);
+int				is_config_incomplete(t_config *config);
+void			free_config(t_config *config);
+char			*skip_whitespace(char *str);
+char			*extract_path(char *line);
+int				parse_rgb_colors(char *line, int colors[3]);
+int				parse_texture_line(char *line, char **texture_ptr);
+int				parse_color_line(char *line, int color[3]);
+int				process_line(char *line, t_config *config, int *map_started,
+					int *map_ended);
+
+// ========== Parsing Map Functions ==========
+char			*remove_trailing_newline(char *line);
+int				allocate_map_array(const char *filename, t_map *map_data);
 
 // ========== Map Validation ==========
-int			validate_map_characters(t_map *map_data);
-int			validate_enclosed_map(t_map *map_data);
-int			validate_player_position(t_map *map_data);
+int				validate_map_characters(t_map *map_data);
+int				validate_player_position(t_map *map_data);
+int				check_playable_area_enclosure(t_map *map_data);
 
 // ========== Helper Functions ==========
-int			is_valid_map_character(char c);
-int			is_playable_area(char c);
-int			is_player_position(char c);
-int			is_position_valid(t_map *map_data, int i, int j);
-char		get_char_at_position(t_map *map_data, int i, int j);
-
-// ========== Character Validation ==========
-int			validate_single_character(t_map *map_data, int i, int j);
-
-// ========== Player Validation ==========
-int			count_players_in_line(t_map *map_data, int i);
+int				is_valid_map_character(char c);
+int				is_playable_area(char c);
+int				is_player_position(char c);
+int				is_position_valid(t_map *map_data, int i, int j);
+char			get_char_at_position(t_map *map_data, int i, int j);
+int				is_valid_texture_path(char *path);
 
 // ========== Enclosure Validation ==========
-int			check_playable_area_enclosure(t_map *map_data);
-int			check_adjacent_position(t_map *map_data, int i, int j, int di,
-				int dj);
-int			check_all_directions(t_map *map_data, int i, int j);
-int			validate_single_playable_position(t_map *map_data, int i, int j);
-int			check_line_enclosure(t_map *map_data, int i);
+int				check_playable_area_enclosure(t_map *map_data);
+int				check_adjacent_position(t_map *map_data, int i, int j, int di,
+					int dj);
+int				check_all_directions(t_map *map_data, int i, int j);
+int				validate_single_playable_position(t_map *map_data, int i,
+					int j);
+int				check_line_enclosure(t_map *map_data, int i);
 
 #endif

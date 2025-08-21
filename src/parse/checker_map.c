@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 14:35:37 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/18 15:21:00 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:25:12 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_valid_map_character(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
-		|| c == ' ');
+		|| c == ' ' || c == '\n');
 }
 
 int	is_playable_area(char c)
@@ -44,13 +44,6 @@ char	get_char_at_position(t_map *map_data, int i, int j)
 	return (map_data->map[i][j]);
 }
 
-int	validate_single_character(t_map *map_data, int i, int j)
-{
-	if (!is_valid_map_character(map_data->map[i][j]))
-		return (0);
-	return (1);
-}
-
 int	validate_map_characters(t_map *map_data)
 {
 	int	i;
@@ -62,41 +55,32 @@ int	validate_map_characters(t_map *map_data)
 		j = 0;
 		while (map_data->map[i][j])
 		{
-			if (!validate_single_character(map_data, i, j))
-				return (0);
+			if (!is_valid_map_character(map_data->map[i][j]))
+				return (1);
 			j++;
 		}
 		i++;
 	}
-	return (1);
-}
-
-int	count_players_in_line(t_map *map_data, int i)
-{
-	int	j;
-	int	count;
-
-	count = 0;
-	j = 0;
-	while (map_data->map[i][j])
-	{
-		if (is_player_position(map_data->map[i][j]))
-			count++;
-		j++;
-	}
-	return (count);
+	return (0);
 }
 
 int	validate_player_position(t_map *map_data)
 {
 	int	i;
+	int	j;
 	int	player_count;
 
 	player_count = 0;
 	i = 0;
 	while (i < map_data->map_height)
 	{
-		player_count += count_players_in_line(map_data, i);
+		j = 0;
+		while (map_data->map[i][j])
+		{
+			if (is_player_position(map_data->map[i][j]))
+				player_count++;
+			j++;
+		}
 		i++;
 	}
 	if (player_count != 1)
@@ -107,10 +91,21 @@ int	validate_player_position(t_map *map_data)
 int	check_adjacent_position(t_map *map_data, int i, int j, int di, int dj)
 {
 	char	adjacent_char;
+	int		adj_i;
+	int		adj_j;
 
-	adjacent_char = get_char_at_position(map_data, i + di, j + dj);
-	if (adjacent_char == ' ')
+	adj_i = i + di;
+	adj_j = j + dj;
+	adjacent_char = get_char_at_position(map_data, adj_i, adj_j);
+	if (!is_position_valid(map_data, adj_i, adj_j))
 		return (1);
+	if (adjacent_char == ' ')
+	{
+		if (adj_i == 0 || adj_i == map_data->map_height - 1 || adj_j == 0
+			|| adj_j >= (int)ft_strlen(map_data->map[adj_i]) - 1)
+			return (1);
+		return (0);
+	}
 	return (0);
 }
 
@@ -160,9 +155,4 @@ int	check_playable_area_enclosure(t_map *map_data)
 		i++;
 	}
 	return (0);
-}
-
-int	validate_enclosed_map(t_map *map_data)
-{
-	return (check_playable_area_enclosure(map_data));
 }
