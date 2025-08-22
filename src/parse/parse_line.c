@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 18:40:16 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/21 11:43:36 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:16:12 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ static int	handle_config_line(char *line, t_config *config)
 static int	handle_map_line_start(t_config *config)
 {
 	if (is_config_incomplete(config))
+	{
+		printf("Error: Map found before all required \
+      configuration is complete\n");
 		return (1);
+	}
 	return (0);
 }
 
@@ -73,7 +77,12 @@ int	process_line(char *line, t_config *config, int *map_started, int *map_ended)
 			return (handle_map_line_start(config));
 		}
 		else if (*map_ended)
+		{
+			printf("Error: Invalid content found after map\n");
+			printf("Map must be at the end of the file with \
+        no content after it\n");
 			return (1);
+		}
 	}
 	else if (!*map_started)
 		return (handle_config_line(line, config));

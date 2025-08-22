@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:20:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/21 20:01:50 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:47:47 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,11 @@ int	count_map_lines(const char *filename)
 	}
 	close(fd);
 	return (map_line_count);
+}
+
+int	load_map_from_file(const char *filename, t_map *map_data)
+{
+	if (parse_map(filename, map_data) != 0)
+		return (1);
+	return (0);
 }

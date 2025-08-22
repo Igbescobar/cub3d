@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 13:57:53 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/21 20:07:55 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:14:59 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	allocate_map_array(const char *filename, t_map *map_data)
 {
 	map_data->map_height = count_map_lines(filename);
 	if (map_data->map_height <= 0)
+	{
+		printf("Error: No valid map found in file\n");
 		return (1);
+	}
 	map_data->map = malloc(sizeof(char *) * (map_data->map_height + 1));
 	if (!map_data->map)
 		return (1);

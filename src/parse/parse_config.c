@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:15:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/21 20:08:28 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:24:46 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,20 @@
 
 int	is_config_incomplete(t_config *config)
 {
-	if (!config->north_texture || !config->south_texture
-		|| !config->west_texture || !config->east_texture)
-		return (1);
+	if (!config->north_texture)
+		return (exit_with_error("Missing North texture (NO)"));
+	if (!config->south_texture)
+		return (exit_with_error("Missing South texture (SO)"));
+	if (!config->west_texture)
+		return (exit_with_error("Missing West texture (WE)"));
+	if (!config->east_texture)
+		return (exit_with_error("Missing East texture (EA)"));
 	if (config->floor_color[0] == -1 || config->floor_color[1] == -1
 		|| config->floor_color[2] == -1)
-		return (1);
+		return (exit_with_error("Missing or invalid Floor color (F)"));
 	if (config->ceiling_color[0] == -1 || config->ceiling_color[1] == -1
 		|| config->ceiling_color[2] == -1)
-		return (1);
+		return (exit_with_error("Missing or invalid Ceiling color (C)"));
 	return (0);
 }
 

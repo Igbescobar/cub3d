@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:36:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/21 20:25:52 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:51:09 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	run_all_validations(t_map *map_data)
 {
-	if (validate_characters(map_data) != 0)
+	if (validate_map_characters(map_data) != 0)
 		return (1);
 	if (validate_enclosure(map_data) != 0)
 		return (1);

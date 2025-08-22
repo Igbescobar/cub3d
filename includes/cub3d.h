@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/21 20:25:17 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:51:08 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int				validate_argument_count(int argc);
 int				validate_file_extension(const char *filename);
 int				validate_file_access(const char *filename);
 int				load_map_from_file(const char *filename, t_map *map_data);
-int				validate_characters(t_map *map_data);
 int				validate_enclosure(t_map *map_data);
 int				validate_player(t_map *map_data);
 int				run_all_validations(t_map *map_data);
@@ -98,11 +97,7 @@ int				is_valid_texture_path(char *path);
 
 // ========== Enclosure Validation ==========
 int				check_playable_area_enclosure(t_map *map_data);
-int				check_adjacent_position(t_map *map_data, int i, int j, int di,
-					int dj);
-int				check_all_directions(t_map *map_data, int i, int j);
-int				validate_single_playable_position(t_map *map_data, int i,
-					int j);
-int				check_line_enclosure(t_map *map_data, int i);
+int				is_position_at_map_edge(t_map *map_data, int i, int j);
+int				is_safe_adjacent_position(t_map *map_data, int adj_i, int adj_j);
 
 #endif
