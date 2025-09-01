@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/22 17:51:08 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 10:52:29 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
+# include "../mlx/mlx.h"
 # include "get_next_line.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -39,11 +40,29 @@ typedef struct s_map
 	t_config	config;
 }				t_map;
 
+// ========== MLX Defines ==========
+# define WIN_WIDTH 1080
+# define WIN_HEIGHT 720
+# define ESC_KEY 65307
+
+// ========== MLX Structures ==========
+typedef struct s_mlx
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+	void		*img_ptr;
+	char		*img_data;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	t_map		*map_data;
+}				t_mlx;
+
 // ========== Error Handling ==========
 int				exit_with_error(const char *message);
 
 // ========== Argument Parsing ==========
-int				parsing_handler(int argc, char **argv);
+int				parsing_handler(int argc, char **argv, t_map *map_data);
 int				has_cub_extension(const char *filename);
 
 // ========== Parsing Sub-functions ==========
@@ -98,6 +117,13 @@ int				is_valid_texture_path(char *path);
 // ========== Enclosure Validation ==========
 int				check_playable_area_enclosure(t_map *map_data);
 int				is_position_at_map_edge(t_map *map_data, int i, int j);
-int				is_safe_adjacent_position(t_map *map_data, int adj_i, int adj_j);
+int				is_safe_adjacent_position(t_map *map_data, int adj_i,
+					int adj_j);
+
+// ========== MLX Functions ==========
+int				init_mlx_window(t_mlx *mlx_data, t_map *map_data);
+int				key_hook(int keycode, t_mlx *mlx_data);
+int				close_window(t_mlx *mlx_data);
+void			cleanup_mlx(t_mlx *mlx_data);
 
 #endif

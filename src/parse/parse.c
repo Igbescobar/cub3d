@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:36:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/22 17:51:09 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 10:30:27 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,18 @@ int	run_all_validations(t_map *map_data)
 	return (0);
 }
 
-int	parsing_handler(int argc, char **argv)
+int	parsing_handler(int argc, char **argv, t_map *map_data)
 {
-	t_map	map_data;
-
 	if (validate_argument_count(argc) != 0)
 		return (1);
 	if (validate_file_extension(argv[1]) != 0)
 		return (1);
 	if (validate_file_access(argv[1]) != 0)
 		return (1);
-	if (load_map_from_file(argv[1], &map_data) != 0)
+	if (load_map_from_file(argv[1], map_data) != 0)
 		return (1);
-	if (run_all_validations(&map_data) != 0)
+	if (run_all_validations(map_data) != 0)
 		return (1);
-	print_success_message(&map_data);
-	free_map(&map_data);
+	print_success_message(map_data);
 	return (0);
 }

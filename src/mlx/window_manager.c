@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   window_manager.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
+/*   Updated: 2025/09/01 10:58:03 by igngonza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/cub3d.h"
+
+int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
+{
+	mlx_data->map_data = map_data;
+	mlx_data->mlx_ptr = mlx_init();
+	if (!mlx_data->mlx_ptr)
+		return (exit_with_error("Failed to initialize MLX"));
+	mlx_data->win_ptr = mlx_new_window(mlx_data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT,
+			"cub3D");
+	if (!mlx_data->win_ptr)
+	{
+		cleanup_mlx(mlx_data);
+		return (exit_with_error("Failed to create MLX window"));
+	}
+	mlx_data->img_ptr = mlx_new_image(mlx_data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+	if (!mlx_data->img_ptr)
+	{
+		cleanup_mlx(mlx_data);
+		return (exit_with_error("Failed to create MLX image"));
+	}
+	mlx_data->img_data = mlx_get_data_addr(mlx_data->img_ptr,
+			&mlx_data->bits_per_pixel, &mlx_data->line_length,
+			&mlx_data->endian);
+	if (!mlx_data->img_data)
+	{
+		cleanup_mlx(mlx_data);
+		return (exit_with_error("Failed to get image data address"));
+	}
+	mlx_key_hook(mlx_data->win_ptr, key_hook, mlx_data);
+	mlx_hook(mlx_data->win_ptr, 17, 0, close_window, mlx_data);
+	return (0);
+}
+
+int	key_hook(int keycode, t_mlx *mlx_data)
+{
+	if (keycode == ESC_KEY)
+		close_window(mlx_data);
+	return (0);
+}
+
+int	close_window(t_mlx *mlx_data)
+{
+	cleanup_mlx(mlx_data);
+	exit(0);
+	return (0);
+}
+
+void	cleanup_mlx(t_mlx *mlx_data)
+{
+	if (mlx_data->img_ptr && mlx_data->mlx_ptr)
+		mlx_destroy_image(mlx_data->mlx_ptr, mlx_data->img_ptr);
+	if (mlx_data->win_ptr && mlx_data->mlx_ptr)
+		mlx_destroy_window(mlx_data->mlx_ptr, mlx_data->win_ptr);
+	if (mlx_data->mlx_ptr)
+	{
+		mlx_destroy_display(mlx_data->mlx_ptr);
+		free(mlx_data->mlx_ptr);
+	}
+}

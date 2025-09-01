@@ -6,7 +6,7 @@
 #    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 12:53:54 by igngonza          #+#    #+#              #
-#    Updated: 2025/08/18 13:56:45 by igngonza         ###   ########.fr        #
+#    Updated: 2025/09/01 10:49:15 by igngonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,20 @@ NAME        := cub3d
 
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
-IFLAGS      := -Iinclude -Ilibft -Imlx
 
 # === Operating System Detection ===
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Linux)
+	IFLAGS      := -Iinclude -Ilibft -Imlx
+else ifeq ($(UNAME_S), Darwin)
+	IFLAGS      := -Iinclude -Ilibft -Imlx -I/opt/X11/include
+endif
+
+ifeq ($(UNAME_S), Linux)
 	MLX_FLAGS := -Lmlx -lmlx -lXext -lX11 -lm -lz
 else ifeq ($(UNAME_S), Darwin)
-	MLX_FLAGS := -Lmlx -lmlx -framework OpenGL -framework AppKit
+	MLX_FLAGS := -Lmlx -lmlx -L/opt/X11/lib -lXext -lX11 -lm -lz
 endif
 
 SRC_DIR     := src
