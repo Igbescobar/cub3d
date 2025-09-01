@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 13:34:35 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 15:22:23 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_map
 	char		**map;
 	int			map_height;
 	int			map_width;
+	int			cell_width;
+	int			cell_height;
 	t_config	config;
 	t_player	player;
 }				t_map;
@@ -150,5 +152,8 @@ void			set_west_direction(t_player *player);
 
 // ========== Cleanup Functions ==========
 void			cleanup_get_next_line(void);
+
+void	paint_grid(t_map map_data, t_mlx mlx_data);
+void	calculate_square_size(t_map *map_data);
 
 #endif
