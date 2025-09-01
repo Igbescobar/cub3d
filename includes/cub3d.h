@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 13:34:35 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:31:09 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,24 @@ typedef struct s_map
 # define WIN_HEIGHT 720
 # define ESC_KEY 65307
 
+// ========== Texture Defines ==========
+# define TEXTURE_NORTH 0
+# define TEXTURE_SOUTH 1
+# define TEXTURE_WEST 2
+# define TEXTURE_EAST 3
+
+// ========== Texture Structure ==========
+typedef struct s_texture
+{
+	void		*img_ptr;
+	char		*img_data;
+	int			width;
+	int			height;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_texture;
+
 // ========== MLX Structures ==========
 typedef struct s_mlx
 {
@@ -68,6 +86,7 @@ typedef struct s_mlx
 	int			line_length;
 	int			endian;
 	t_map		*map_data;
+	t_texture	textures[4];
 }				t_mlx;
 
 // ========== Error Handling ==========
@@ -134,9 +153,19 @@ int				is_safe_adjacent_position(t_map *map_data, int adj_i,
 
 // ========== MLX Functions ==========
 int				init_mlx_window(t_mlx *mlx_data, t_map *map_data);
+int				init_mlx_display(t_mlx *mlx_data);
+int				setup_mlx_hooks(t_mlx *mlx_data);
 int				key_hook(int keycode, t_mlx *mlx_data);
 int				close_window(t_mlx *mlx_data);
 void			cleanup_mlx(t_mlx *mlx_data);
+
+// ========== Texture Functions ==========
+int				load_textures(t_mlx *mlx_data, t_config *config);
+int				load_single_texture(t_mlx *mlx_data, t_texture *texture,
+					char *path);
+void			cleanup_textures(t_mlx *mlx_data);
+int				validate_texture_files(t_config *config);
+void			print_texture_info(t_mlx *mlx_data);
 
 // ========== Player Functions ==========
 int				init_player(t_map *map_data);
