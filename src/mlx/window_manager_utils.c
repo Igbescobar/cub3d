@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:21:49 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 13:22:44 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:30:07 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	close_window(t_mlx *mlx_data)
 
 void	cleanup_mlx(t_mlx *mlx_data)
 {
+	cleanup_textures(mlx_data);
 	if (mlx_data->img_ptr && mlx_data->mlx_ptr)
 		mlx_destroy_image(mlx_data->mlx_ptr, mlx_data->img_ptr);
 	if (mlx_data->win_ptr && mlx_data->mlx_ptr)

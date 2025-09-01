@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 13:22:20 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:31:24 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 	mlx_data->map_data = map_data;
 	if (init_mlx_display(mlx_data) != 0)
 		return (1);
+	if (load_textures(mlx_data, &map_data->config) != 0)
+	{
+		cleanup_mlx(mlx_data);
+		return (1);
+	}
+	print_texture_info(mlx_data);
 	if (setup_mlx_hooks(mlx_data) != 0)
 		return (1);
 	return (0);
