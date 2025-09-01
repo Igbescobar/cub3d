@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:20:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/22 17:47:47 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:58:33 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ void	print_success_message(t_map *map_data)
 	printf("Map validation successful!\n");
 	printf("Map dimensions: %d x %d\n", map_data->map_width,
 		map_data->map_height);
+	printf("Player position: (%.1f, %.1f)\n", map_data->player.pos_x,
+		map_data->player.pos_y);
+	printf("Player direction: (%.2f, %.2f)\n", map_data->player.dir_x,
+		map_data->player.dir_y);
+	printf("Camera plane: (%.2f, %.2f)\n", map_data->player.plane_x,
+		map_data->player.plane_y);
 }
 
 void	calculate_map_width(t_map *map_data)

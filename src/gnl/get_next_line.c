@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:00:35 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 11:22:22 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:16:55 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,4 @@ char	*get_next_line(int fd)
 	extracted_line = ft_new_line_finder(solution_buffer);
 	solution_buffer = ft_remove_excess_line(solution_buffer);
 	return (extracted_line);
-}
-
-void	cleanup_get_next_line(void)
-{
-	get_next_line(-1);
 }

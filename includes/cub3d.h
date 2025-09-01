@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 11:22:26 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:34:35 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,24 @@ typedef struct s_config
 	int			ceiling_color[3];
 }				t_config;
 
+// ========== Player Structure ==========
+typedef struct s_player
+{
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+}				t_player;
+
 typedef struct s_map
 {
 	char		**map;
 	int			map_height;
 	int			map_width;
 	t_config	config;
+	t_player	player;
 }				t_map;
 
 // ========== MLX Defines ==========
@@ -125,6 +137,16 @@ int				init_mlx_window(t_mlx *mlx_data, t_map *map_data);
 int				key_hook(int keycode, t_mlx *mlx_data);
 int				close_window(t_mlx *mlx_data);
 void			cleanup_mlx(t_mlx *mlx_data);
+
+// ========== Player Functions ==========
+int				init_player(t_map *map_data);
+void			set_player_direction(t_player *player, char orientation);
+int				find_player_position(t_map *map_data, int *x, int *y,
+					char *orientation);
+void			set_north_direction(t_player *player);
+void			set_south_direction(t_player *player);
+void			set_east_direction(t_player *player);
+void			set_west_direction(t_player *player);
 
 // ========== Cleanup Functions ==========
 void			cleanup_get_next_line(void);
