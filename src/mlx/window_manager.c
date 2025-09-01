@@ -6,15 +6,14 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 11:22:09 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:22:20 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
+int	init_mlx_display(t_mlx *mlx_data)
 {
-	mlx_data->map_data = map_data;
 	mlx_data->mlx_ptr = mlx_init();
 	if (!mlx_data->mlx_ptr)
 		return (exit_with_error("Failed to initialize MLX"));
@@ -39,35 +38,22 @@ int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 		cleanup_mlx(mlx_data);
 		return (exit_with_error("Failed to get image data address"));
 	}
+	return (0);
+}
+
+int	setup_mlx_hooks(t_mlx *mlx_data)
+{
 	mlx_key_hook(mlx_data->win_ptr, key_hook, mlx_data);
 	mlx_hook(mlx_data->win_ptr, 17, 0, close_window, mlx_data);
 	return (0);
 }
 
-int	key_hook(int keycode, t_mlx *mlx_data)
+int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 {
-	if (keycode == ESC_KEY)
-		close_window(mlx_data);
+	mlx_data->map_data = map_data;
+	if (init_mlx_display(mlx_data) != 0)
+		return (1);
+	if (setup_mlx_hooks(mlx_data) != 0)
+		return (1);
 	return (0);
-}
-
-int	close_window(t_mlx *mlx_data)
-{
-	cleanup_mlx(mlx_data);
-	exit(0);
-	return (0);
-}
-
-void	cleanup_mlx(t_mlx *mlx_data)
-{
-	if (mlx_data->img_ptr && mlx_data->mlx_ptr)
-		mlx_destroy_image(mlx_data->mlx_ptr, mlx_data->img_ptr);
-	if (mlx_data->win_ptr && mlx_data->mlx_ptr)
-		mlx_destroy_window(mlx_data->mlx_ptr, mlx_data->win_ptr);
-	if (mlx_data->mlx_ptr)
-	{
-		mlx_destroy_display(mlx_data->mlx_ptr);
-		free(mlx_data->mlx_ptr);
-	}
-	cleanup_get_next_line();
 }
