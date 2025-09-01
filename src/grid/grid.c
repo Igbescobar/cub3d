@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:07:49 by fdurban-          #+#    #+#             */
-/*   Updated: 2025/09/01 16:16:32 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:13:47 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,39 @@ void	calculate_square_size(t_map *map_data)
 	printf("Value of x per cell is %d based on %d and %d\n", map_data->cell_width, map_data->map_width, WIN_WIDTH);
 }
 
-void	paint_grid(t_map map_data, t_mlx mlx_data)
+void paint_grid(t_map map_data, t_mlx mlx_data)
 {
-	int	i;
-	int	j;
-	// int	max_cell_height;
-	// int	max_cell_width;
-
-	i = 0;
+	int i;
+	int j;
+	int x;
+	int y;
 	calculate_square_size(&map_data);
-	printf("Valor de width cell %d\n", map_data.cell_width);
-	printf("Valor de height cell %d\n", map_data.cell_height);
-	while(map_data.map[i])
+	// Dibujar líneas verticales (columnas)
+	j = 0;
+	while (j <= map_data.map_width)
 	{
-		j = 0;
-		while(map_data.map[i][j])
+		x = j * map_data.cell_width;
+		y = 0;
+		while (y < WIN_HEIGHT)
 		{
-			while()
-			{
-				mlx_pixel_put(mlx_data.mlx_ptr,mlx_data.win_ptr, j * map_data.cell_width, i * map_data.cell_height, 0xFFFFFF);
-			}
-			while()
-			{
-				mlx_pixel_put(mlx_data.mlx_ptr,mlx_data.win_ptr, j * map_data.cell_width, i * map_data.cell_height, 0xFFFFFF);
-			}
-			j++;
+		    mlx_pixel_put(mlx_data.mlx_ptr, mlx_data.win_ptr, x, y, 0xFFFFFF);
+		    y++;
+		}
+		j++;
+	}
+	// Dibujar líneas horizontales (filas)
+	i = 0;
+	while (i <= map_data.map_height)
+	{
+		y = i * map_data.cell_height;
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+		    mlx_pixel_put(mlx_data.mlx_ptr, mlx_data.win_ptr, x, y, 0xFFFFFF);
+		    x++;
 		}
 		i++;
 	}
 }
+
+
