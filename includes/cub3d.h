@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 10:52:29 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:22:26 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,8 @@ int				init_mlx_window(t_mlx *mlx_data, t_map *map_data);
 int				key_hook(int keycode, t_mlx *mlx_data);
 int				close_window(t_mlx *mlx_data);
 void			cleanup_mlx(t_mlx *mlx_data);
+
+// ========== Cleanup Functions ==========
+void			cleanup_get_next_line(void);
 
 #endif

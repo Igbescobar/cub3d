@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:01:38 by igngonza          #+#    #+#             */
-/*   Updated: 2025/08/15 14:01:40 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:22:24 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
+void	cleanup_get_next_line(void);
 char	*ft_append(char const *s1, char const *s2);
 char	*ft_strchr(const char *string, int searchedChar);
 

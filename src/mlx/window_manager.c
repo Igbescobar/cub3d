@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 10:58:03 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:22:09 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ void	cleanup_mlx(t_mlx *mlx_data)
 		mlx_destroy_display(mlx_data->mlx_ptr);
 		free(mlx_data->mlx_ptr);
 	}
+	cleanup_get_next_line();
 }
