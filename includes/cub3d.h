@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 15:22:23 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/02 17:17:04 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
+# include <X11/keysym.h>
+# include <X11/X.h>
 # include "get_next_line.h"
 # include <fcntl.h>
 # include <stdio.h>
@@ -155,5 +157,6 @@ void			cleanup_get_next_line(void);
 
 void	paint_grid(t_map map_data, t_mlx mlx_data);
 void	calculate_square_size(t_map *map_data);
+void	paint_player(t_map map_data, t_mlx mlx_data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:07:49 by fdurban-          #+#    #+#             */
-/*   Updated: 2025/09/01 17:13:47 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/02 14:07:03 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void paint_grid(t_map map_data, t_mlx mlx_data)
 	int j;
 	int x;
 	int y;
-	calculate_square_size(&map_data);
 	// Dibujar líneas verticales (columnas)
 	j = 0;
 	while (j <= map_data.map_width)
@@ -35,8 +34,8 @@ void paint_grid(t_map map_data, t_mlx mlx_data)
 		y = 0;
 		while (y < WIN_HEIGHT)
 		{
-		    mlx_pixel_put(mlx_data.mlx_ptr, mlx_data.win_ptr, x, y, 0xFFFFFF);
-		    y++;
+			mlx_pixel_put(mlx_data.mlx_ptr, mlx_data.win_ptr, x, y, 0xFFFFFF);
+			y++;
 		}
 		j++;
 	}
@@ -48,11 +47,21 @@ void paint_grid(t_map map_data, t_mlx mlx_data)
 		x = 0;
 		while (x < WIN_WIDTH)
 		{
-		    mlx_pixel_put(mlx_data.mlx_ptr, mlx_data.win_ptr, x, y, 0xFFFFFF);
-		    x++;
+			mlx_pixel_put(mlx_data.mlx_ptr, mlx_data.win_ptr, x, y, 0xFFFFFF);
+			x++;
 		}
 		i++;
 	}
+}
+
+void	paint_player(t_map map_data, t_mlx mlx_data)
+{
+	char	*relative_path = "./textures/player.xpm";
+	int		img_width;
+	int		img_height;
+	void	*img;
+	img = mlx_xpm_file_to_image(mlx_data.mlx_ptr, relative_path, &img_width, &img_height);
+	mlx_put_image_to_window(mlx_data.mlx_ptr, mlx_data.win_ptr, img, map_data.cell_width * map_data.player.pos_x, map_data.cell_height * map_data.player.pos_y);
 }
 
 

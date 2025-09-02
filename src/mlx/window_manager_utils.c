@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_manager_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:21:49 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 13:22:44 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/02 17:17:29 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	key_hook(int keycode, t_mlx *mlx_data)
 {
-	if (keycode == ESC_KEY)
+	if (keycode == XK_Escape)
 		close_window(mlx_data);
 	return (0);
 }
