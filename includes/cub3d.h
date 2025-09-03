@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/02 17:17:04 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:11:24 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ typedef struct s_player
 {
 	double		pos_x;
 	double		pos_y;
+	int			coordinate_x;
+	int			coordinate_y;
 	double		dir_x;
 	double		dir_y;
 	double		plane_x;
 	double		plane_y;
+	void		*player_img;
 }				t_player;
 
 typedef struct s_map
@@ -73,6 +76,12 @@ typedef struct s_mlx
 	int			endian;
 	t_map		*map_data;
 }				t_mlx;
+
+typedef struct s_game {
+    t_mlx mlx;
+    t_map map;
+} t_game;
+
 
 // ========== Error Handling ==========
 int				exit_with_error(const char *message);
@@ -155,8 +164,8 @@ void			set_west_direction(t_player *player);
 // ========== Cleanup Functions ==========
 void			cleanup_get_next_line(void);
 
-void	paint_grid(t_map map_data, t_mlx mlx_data);
+void	paint_grid(void);
 void	calculate_square_size(t_map *map_data);
-void	paint_player(t_map map_data, t_mlx mlx_data);
+void	paint_player(t_map *map_data, t_mlx mlx_data);
 
 #endif
