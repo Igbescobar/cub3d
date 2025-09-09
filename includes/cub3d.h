@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fernando <fernando@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/04 13:05:53 by fernando         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:10:07 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,16 @@ typedef struct s_map
 	int			map_width;
 	int			cell_width;
 	int			cell_height;
+	int			grid_width;
+	int			grid_height;
 	void		*square_img;
 	t_config	config;
 	t_player	player;
 }				t_map;
 
 // ========== MLX Defines ==========
-# define WIN_WIDTH 1080
-# define WIN_HEIGHT 720
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 # define ESC_KEY 65307
 
 // ========== MLX Structures ==========
@@ -78,6 +80,7 @@ typedef struct s_mlx
 	t_map		*map_data;
 }				t_mlx;
 
+// ========== Keys Structures ==========
 typedef struct s_keys
 {
 	int			w;
@@ -86,12 +89,13 @@ typedef struct s_keys
 	int			d;
 }				t_keys;
 
+// ========== Game Structure ==========
+
 typedef struct s_game {
 	t_keys keys;
-    t_mlx mlx;
-    t_map map;
+	t_mlx mlx;
+	t_map map;
 } t_game;
-
 
 // ========== Error Handling ==========
 int				exit_with_error(const char *message);
@@ -174,6 +178,7 @@ void			set_west_direction(t_player *player);
 // ========== Cleanup Functions ==========
 void			cleanup_get_next_line(void);
 
+// ========== Paint Functions ==========
 void	paint_grid(t_map *map_data, t_mlx mlx_data);
 void	calculate_square_size(t_map *map_data);
 void	paint_player(t_map *map_data, t_mlx mlx_data);

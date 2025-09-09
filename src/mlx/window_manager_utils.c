@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:21:49 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/03 15:53:43 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:14:53 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	key_hook(int keycode, t_mlx *mlx_data)
 {
 
-	if (keycode == XK_Escape)
+	if (keycode == ESC_KEY)
 		close_window(mlx_data);
 	return (0);
 }
