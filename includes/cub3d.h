@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fernando <fernando@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/03 17:11:24 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/04 13:05:53 by fernando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_map
 	int			map_width;
 	int			cell_width;
 	int			cell_height;
+	void		*square_img;
 	t_config	config;
 	t_player	player;
 }				t_map;
@@ -77,7 +78,16 @@ typedef struct s_mlx
 	t_map		*map_data;
 }				t_mlx;
 
+typedef struct s_keys
+{
+	int			w;
+	int			a;
+	int			s;
+	int			d;
+}				t_keys;
+
 typedef struct s_game {
+	t_keys keys;
     t_mlx mlx;
     t_map map;
 } t_game;
@@ -164,7 +174,7 @@ void			set_west_direction(t_player *player);
 // ========== Cleanup Functions ==========
 void			cleanup_get_next_line(void);
 
-void	paint_grid(void);
+void	paint_grid(t_map *map_data, t_mlx mlx_data);
 void	calculate_square_size(t_map *map_data);
 void	paint_player(t_map *map_data, t_mlx mlx_data);
 

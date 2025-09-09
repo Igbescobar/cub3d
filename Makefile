@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+         #
+#    By: fernando <fernando@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 12:53:54 by igngonza          #+#    #+#              #
-#    Updated: 2025/09/03 16:15:54 by fdurban-         ###   ########.fr        #
+#    Updated: 2025/09/04 00:27:40 by fernando         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME        := cub3d
 
 CC          := cc
-CFLAGS      := -Wall -Wextra -Werror
+CFLAGS      := -Wall -Wextra -Werror -g
 
 # === Operating System Detection ===
 UNAME_S := $(shell uname -s)

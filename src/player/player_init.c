@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fernando <fernando@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 11:30:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 13:27:42 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/04 11:38:55 by fernando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	init_player(t_map *map_data)
 		return (exit_with_error("No player position found in map"));
 	map_data->player.pos_x = (double)player_x + 0.5;
 	map_data->player.pos_y = (double)player_y + 0.5;
+	//printf("posicion del jugador en y al inicializar es de %f\n", map_data->player.pos_y );
 	set_player_direction(&map_data->player, orientation);
 	return (0);
 }
