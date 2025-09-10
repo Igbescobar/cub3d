@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/09 16:10:07 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/10 17:24:24 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,19 @@ typedef struct s_map
 	int			map_width;
 	int			cell_width;
 	int			cell_height;
-	int			grid_width;
-	int			grid_height;
-	void		*square_img;
+	int			line_length;
+	void		*map_img;
+	char		*map_addr;
+	int			bits_per_pixel;
+	int			endian;
 	t_config	config;
 	t_player	player;
 }				t_map;
+
+typedef struct	s_data {
+
+}				t_data;
+
 
 // ========== MLX Defines ==========
 # define WIN_WIDTH 1920
@@ -180,7 +187,6 @@ void			cleanup_get_next_line(void);
 
 // ========== Paint Functions ==========
 void	paint_grid(t_map *map_data, t_mlx mlx_data);
-void	calculate_square_size(t_map *map_data);
 void	paint_player(t_map *map_data, t_mlx mlx_data);
 
 #endif
