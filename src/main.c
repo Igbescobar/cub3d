@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fernando <fernando@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:57:19 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/10 17:45:28 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/10 19:56:26 by fernando         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int game_loop(t_game *game)
 		game->map.player.coordinate_x -= 1;
 	if (game->keys.s)
 		game->map.player.coordinate_y += 1;
-	paint_grid(&game->map, game->mlx);
-	paint_player(&game->map, game->mlx);
 	return (0);
 }
 
@@ -79,10 +77,15 @@ int	main(int argc, char **argv)
 		cleanup_get_next_line();
 		return (1);
 	};
-	map_data.cell_width = 20;
-	map_data.cell_height = 20;
-	map_data.line_length = mlx_get_data_addr(mlx_data.img_ptr, map_data.bits_per_pixel, );
+	map_data.cell_width = 30;
+	map_data.cell_height = 30;
+	map_data.map_img = mlx_new_image(
+		mlx_data.mlx_ptr,
+		(map_data.map_width * map_data.cell_width),
+		(map_data.map_height * map_data.cell_height));
+		map_data.map_addr = mlx_get_data_addr(map_data.map_img, &map_data.bits_per_pixel, &map_data.line_length, &map_data.endian);
 	initialize_game_values(&game, map_data, mlx_data);
+	paint_grid(&game.map, &game.mlx);
 	mlx_hook(game.mlx.win_ptr, KeyPress, KeyPressMask, key_press_handler, &game);
 	mlx_hook(game.mlx.win_ptr, KeyRelease, KeyReleaseMask, key_release_handler, &game);
 	mlx_loop_hook(mlx_data.mlx_ptr, game_loop, &game);
