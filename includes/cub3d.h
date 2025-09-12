@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/12 12:44:14 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:39:25 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ typedef struct s_keys
 
 typedef struct s_game {
 	t_keys keys;
-	t_mlx mlx;
-	t_map map;
+	t_mlx *mlx;
+	t_map *map;
 } t_game;
 
 // ========== Error Handling ==========
@@ -188,5 +188,6 @@ void			cleanup_get_next_line(void);
 // ========== Paint Functions ==========
 void	paint_grid(t_map *map_data, t_mlx *mlx_data);
 void	paint_player(t_map *map_data, int px, int py, int size, int color);
+int		is_wall(t_map map, int i, int j);
 
 #endif

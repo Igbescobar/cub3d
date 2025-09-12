@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:07:49 by fdurban-          #+#    #+#             */
-/*   Updated: 2025/09/12 12:59:24 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:53:13 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ void my_mlx_pixel_put(t_map *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+int	is_wall(t_map map, int i, int j)
+{
+
+	if(map.map[i][j] == '1')
+	{
+		printf("WALL!\n");
+		return (1);
+	}
+	else
+		return (0);
+}
 
 void	paint_player(t_map *map_data, int px, int py, int size, int color)
 {
