@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fernando <fernando@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:57:19 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/10 19:56:26 by fernando         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:03:50 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	key_press_handler(int keycode, t_game *game)
 		game->keys.s = 1;
 	if (keycode == XK_d)
 		game->keys.d = 1;
+	printf("The coordinates of the player are %f\n", game->map.player.pos_x);
 	return 0;
 }
 
@@ -41,13 +42,16 @@ int	key_release_handler(int keycode, t_game *game)
 int game_loop(t_game *game)
 {
 	if (game->keys.w)
-		game->map.player.coordinate_y -= 1;
+		game->map.player.pos_y -= 0.1;
 	if (game->keys.d)
-		game->map.player.coordinate_x += 1;
+		game->map.player.pos_x += 0.1;
 	if (game->keys.a)
-		game->map.player.coordinate_x -= 1;
+		game->map.player.pos_x -= 0.1;
 	if (game->keys.s)
-		game->map.player.coordinate_y += 1;
+		game->map.player.pos_y += 0.1;
+	game->map.player.coordinate_x = game->map.player.pos_x * game->map.cell_width;
+	game->map.player.coordinate_y = game->map.player.pos_y * game->map.cell_height;
+	paint_grid(&game->map, &game->mlx);
 	return (0);
 }
 
@@ -79,13 +83,18 @@ int	main(int argc, char **argv)
 	};
 	map_data.cell_width = 30;
 	map_data.cell_height = 30;
+	map_data.player.coordinate_x = map_data.cell_width * map_data.player.pos_x;
+	map_data.player.coordinate_y = map_data.cell_height * map_data.player.pos_y;
 	map_data.map_img = mlx_new_image(
 		mlx_data.mlx_ptr,
 		(map_data.map_width * map_data.cell_width),
 		(map_data.map_height * map_data.cell_height));
-		map_data.map_addr = mlx_get_data_addr(map_data.map_img, &map_data.bits_per_pixel, &map_data.line_length, &map_data.endian);
+	map_data.map_addr = mlx_get_data_addr(
+	map_data.map_img,
+	&map_data.bits_per_pixel,
+	&map_data.line_length,
+	&map_data.endian);
 	initialize_game_values(&game, map_data, mlx_data);
-	paint_grid(&game.map, &game.mlx);
 	mlx_hook(game.mlx.win_ptr, KeyPress, KeyPressMask, key_press_handler, &game);
 	mlx_hook(game.mlx.win_ptr, KeyRelease, KeyReleaseMask, key_release_handler, &game);
 	mlx_loop_hook(mlx_data.mlx_ptr, game_loop, &game);

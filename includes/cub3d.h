@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fernando <fernando@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/10 19:39:55 by fernando         ###   ########.fr       */
+/*   Updated: 2025/09/12 12:44:14 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,6 @@ void			cleanup_get_next_line(void);
 
 // ========== Paint Functions ==========
 void	paint_grid(t_map *map_data, t_mlx *mlx_data);
-void	paint_player(t_map *map_data, t_mlx mlx_data);
+void	paint_player(t_map *map_data, int px, int py, int size, int color);
 
 #endif

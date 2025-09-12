@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grid.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fernando <fernando@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:07:49 by fdurban-          #+#    #+#             */
-/*   Updated: 2025/09/11 11:24:44 by fernando         ###   ########.fr       */
+/*   Updated: 2025/09/12 12:59:24 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,25 @@ void my_mlx_pixel_put(t_map *data, int x, int y, int color)
 	dst = data->map_addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	//printf("value of dst is %p\n", dst);
 	*(unsigned int*)dst = color;
+}
+
+
+void	paint_player(t_map *map_data, int px, int py, int size, int color)
+{
+	int	i;
+	int	j;
+
+	i = -size/2;
+	while(i < size/2)
+	{
+		j = -size/2;
+		while(j < size/2)
+		{
+			my_mlx_pixel_put(map_data, px + j, py + i, color);
+			j++;
+		}
+		i++;
+	}
 }
 
 void	paint_grid(t_map *map_data, t_mlx *mlx_data)
@@ -58,13 +77,11 @@ void	paint_grid(t_map *map_data, t_mlx *mlx_data)
 		}
 		i++;
 	}
-
+	paint_player(map_data, map_data->player.coordinate_x, map_data->player.coordinate_y, 20, 0xFF0000);
 	mlx_put_image_to_window(
-	mlx_data->mlx_ptr,
-	mlx_data->win_ptr,
-	map_data->map_img,
-	0, 0
+		mlx_data->mlx_ptr,
+		mlx_data->win_ptr,
+		map_data->map_img,
+		0, 0
 	);
 }
-
-
