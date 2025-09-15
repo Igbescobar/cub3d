@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:07:49 by fdurban-          #+#    #+#             */
-/*   Updated: 2025/09/12 16:53:13 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:02:08 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,7 @@ void my_mlx_pixel_put(t_map *data, int x, int y, int color)
 	char *dst;
 
 	dst = data->map_addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	//printf("value of dst is %p\n", dst);
 	*(unsigned int*)dst = color;
-}
-
-int	is_wall(t_map map, int i, int j)
-{
-
-	if(map.map[i][j] == '1')
-	{
-		printf("WALL!\n");
-		return (1);
-	}
-	else
-		return (0);
 }
 
 void	paint_player(t_map *map_data, int px, int py, int size, int color)
@@ -88,11 +75,11 @@ void	paint_grid(t_map *map_data, t_mlx *mlx_data)
 		}
 		i++;
 	}
-	paint_player(map_data, map_data->player.coordinate_x, map_data->player.coordinate_y, 20, 0xFF0000);
+	paint_player(map_data, map_data->player.coordinate_x, map_data->player.coordinate_y, 30, 0xFF0000);
 	mlx_put_image_to_window(
 		mlx_data->mlx_ptr,
 		mlx_data->win_ptr,
 		map_data->map_img,
-		0, 0
+		(WIN_WIDTH - ( map_data->map_width * map_data->cell_width))/2, (WIN_HEIGHT - ( map_data->map_height * map_data->cell_height))/2
 	);
 }

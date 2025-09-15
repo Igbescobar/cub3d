@@ -6,7 +6,7 @@
 /*   By: fdurban- <fdurban-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:57:19 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/12 16:53:59 by fdurban-         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:19:59 by fdurban-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ int	key_release_handler(int keycode, t_game *game)
 		game->keys.s = 0;
 	if (keycode == XK_d)
 		game->keys.d = 0;
+	printf("position y when colliding with wall is %d\n", game->map->player.coordinate_y);
 	return (0);
 }
 
 int game_loop(t_game *game)
 {
-	if (game->keys.w && !is_wall(*game->map, game->map->player.pos_x, game->map->player.pos_y))
+	if (game->keys.w)
 		game->map->player.pos_y -= 0.01;
-	if (game->keys.d && !is_wall(*game->map, game->map->player.pos_x, game->map->player.pos_y))
+	if (game->keys.d)
 		game->map->player.pos_x += 0.01;
-	if (game->keys.a && !is_wall(*game->map, game->map->player.pos_x, game->map->player.pos_y))
+	if (game->keys.a)
 		game->map->player.pos_x -= 0.01;
-	if (game->keys.s && !is_wall(*game->map, game->map->player.pos_x, game->map->player.pos_y))
+	if (game->keys.s)
 		game->map->player.pos_y += 0.01;
 	game->map->player.coordinate_x = game->map->player.pos_x * game->map->cell_width;
 	game->map->player.coordinate_y = game->map->player.pos_y * game->map->cell_height;
@@ -83,6 +84,15 @@ void	start_2d_image(t_map *map_data,t_mlx *mlx_data)
 	&map_data->endian);
 }
 
+void	start_raycast()
+{
+	int dir_x;
+	int dir_y;
+
+	dir_x = 0;
+	dir_y = 1;
+}
+
 int	main(int argc, char **argv)
 {
 	t_map	map_data;
@@ -101,7 +111,6 @@ int	main(int argc, char **argv)
 	};
 	initialize_game_values(&game, &map_data, &mlx_data);
 	start_2d_image(&map_data, &mlx_data);
-	printf("Entra\n");
 	mlx_hook(game.mlx->win_ptr, KeyPress, KeyPressMask, key_press_handler, &game);
 	mlx_hook(game.mlx->win_ptr, KeyRelease, KeyReleaseMask, key_release_handler, &game);
 	mlx_loop_hook(mlx_data.mlx_ptr, game_loop, &game);
