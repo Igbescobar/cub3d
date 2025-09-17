@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 16:31:09 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:21:07 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,35 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+// ========== MLX Defines ==========
+# define WIN_WIDTH 1080
+# define WIN_HEIGHT 720
+# define ESC_KEY 65307
+
+// ========== 2D Map Defines ==========
+# define TILE_SIZE 20
+# define MAP_2D_COLOR_WALL 0x8B4513
+# define MAP_2D_COLOR_EMPTY 0xF5F5DC
+# define MAP_2D_COLOR_PLAYER 0xFF0000
+# define MAP_2D_OFFSET_X 50
+# define MAP_2D_OFFSET_Y 50
+
+// ========== Key Codes ==========
+# define KEY_M 109
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+
+// ========== Movement ==========
+# define MOVE_SPEED 0.3
+
+// ========== Texture Defines ==========
+# define TEXTURE_NORTH 0
+# define TEXTURE_SOUTH 1
+# define TEXTURE_WEST 2
+# define TEXTURE_EAST 3
 
 typedef struct s_config
 {
@@ -52,17 +81,6 @@ typedef struct s_map
 	t_player	player;
 }				t_map;
 
-// ========== MLX Defines ==========
-# define WIN_WIDTH 1080
-# define WIN_HEIGHT 720
-# define ESC_KEY 65307
-
-// ========== Texture Defines ==========
-# define TEXTURE_NORTH 0
-# define TEXTURE_SOUTH 1
-# define TEXTURE_WEST 2
-# define TEXTURE_EAST 3
-
 // ========== Texture Structure ==========
 typedef struct s_texture
 {
@@ -87,6 +105,7 @@ typedef struct s_mlx
 	int			endian;
 	t_map		*map_data;
 	t_texture	textures[4];
+	int			show_2d_map;
 }				t_mlx;
 
 // ========== Error Handling ==========
@@ -158,6 +177,8 @@ int				setup_mlx_hooks(t_mlx *mlx_data);
 int				key_hook(int keycode, t_mlx *mlx_data);
 int				close_window(t_mlx *mlx_data);
 void			cleanup_mlx(t_mlx *mlx_data);
+void			handle_movement_keys(int keycode, t_mlx *mlx_data);
+int				is_valid_position(t_mlx *mlx_data, double new_x, double new_y);
 
 // ========== Texture Functions ==========
 int				load_textures(t_mlx *mlx_data, t_config *config);
@@ -176,6 +197,24 @@ void			set_north_direction(t_player *player);
 void			set_south_direction(t_player *player);
 void			set_east_direction(t_player *player);
 void			set_west_direction(t_player *player);
+
+// ========== Player Movement Functions ==========
+int				is_valid_position(t_mlx *mlx_data, double new_x, double new_y);
+void			handle_movement_keys(int keycode, t_mlx *mlx_data);
+
+// ========== 2D Map Rendering ==========
+void			render_2d_map(t_mlx *mlx_data);
+void			draw_2d_map_grid(t_mlx *mlx_data);
+void			draw_player_on_map(t_mlx *mlx_data);
+void			clear_image(t_mlx *mlx_data);
+void			calculate_map_center_offset(t_mlx *mlx_data, int *offset_x,
+					int *offset_y);
+
+// ========== Pixel Utilities ==========
+void			put_pixel_to_image(t_mlx *mlx_data, int x, int y, int color);
+void			draw_rectangle(t_mlx *mlx_data, int x, int y, int width,
+					int height, int color);
+int				create_rgb_color(int r, int g, int b);
 
 // ========== Cleanup Functions ==========
 void			cleanup_get_next_line(void);

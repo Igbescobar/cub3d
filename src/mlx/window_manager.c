@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 16:31:24 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:34:49 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	init_mlx_display(t_mlx *mlx_data)
 
 int	setup_mlx_hooks(t_mlx *mlx_data)
 {
-	mlx_key_hook(mlx_data->win_ptr, key_hook, mlx_data);
+	mlx_hook(mlx_data->win_ptr, 2, 1L << 0, key_hook, mlx_data);
 	mlx_hook(mlx_data->win_ptr, 17, 0, close_window, mlx_data);
 	return (0);
 }
@@ -51,6 +51,7 @@ int	setup_mlx_hooks(t_mlx *mlx_data)
 int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 {
 	mlx_data->map_data = map_data;
+	mlx_data->show_2d_map = 1;
 	if (init_mlx_display(mlx_data) != 0)
 		return (1);
 	if (load_textures(mlx_data, &map_data->config) != 0)
@@ -58,8 +59,8 @@ int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 		cleanup_mlx(mlx_data);
 		return (1);
 	}
-	print_texture_info(mlx_data);
 	if (setup_mlx_hooks(mlx_data) != 0)
 		return (1);
+	render_2d_map(mlx_data);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:21:49 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 16:30:07 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:21:22 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ int	key_hook(int keycode, t_mlx *mlx_data)
 {
 	if (keycode == ESC_KEY)
 		close_window(mlx_data);
+	else if (keycode == KEY_M)
+	{
+		mlx_data->show_2d_map = !mlx_data->show_2d_map;
+		if (mlx_data->show_2d_map)
+			render_2d_map(mlx_data);
+		else
+		{
+			clear_image(mlx_data);
+			mlx_put_image_to_window(mlx_data->mlx_ptr, mlx_data->win_ptr,
+				mlx_data->img_ptr, 0, 0);
+		}
+	}
+	else if (mlx_data->show_2d_map)
+		handle_movement_keys(keycode, mlx_data);
 	return (0);
 }
 
