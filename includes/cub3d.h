@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/19 10:45:52 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/19 12:34:11 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@
 # define MAP_2D_OFFSET_X 50
 # define MAP_2D_OFFSET_Y 50
 // ========== Movement ==========
-# define MOVE_SPEED 0.3
-# define ROTATION_SPEED 0.05
+# define MOVE_SPEED 0.05
+# define ROTATION_SPEED 0.04
 
 // ========== Texture Defines ==========
 # define TEXTURE_NORTH 0
@@ -56,6 +56,22 @@ typedef struct s_config
 	int			floor_color[3];
 	int			ceiling_color[3];
 }				t_config;
+
+// ========== Rectangle Structure ==========
+typedef struct s_rect
+{
+	int			x;
+	int			y;
+	int			width;
+	int			height;
+}				t_rect;
+
+// ========== Offset Structure ==========
+typedef struct s_offset
+{
+	int			x;
+	int			y;
+}				t_offset;
 
 // ========== Player Structure ==========
 typedef struct s_player
@@ -200,7 +216,6 @@ int				load_single_texture(t_mlx *mlx_data, t_texture *texture,
 					char *path);
 void			cleanup_textures(t_mlx *mlx_data);
 int				validate_texture_files(t_config *config);
-void			print_texture_info(t_mlx *mlx_data);
 
 // ========== Player Functions ==========
 int				init_player(t_map *map_data);
@@ -213,9 +228,12 @@ void			set_east_direction(t_player *player);
 void			set_west_direction(t_player *player);
 
 // ========== Player Movement Functions ==========
-int				is_valid_position(t_mlx *mlx_data, double new_x, double new_y);
-void			handle_movement_keys(int keycode, t_mlx *mlx_data);
-
+void			move_player(t_mlx *mlx_data, double move_x, double move_y);
+void			move_forward(t_mlx *mlx_data);
+void			move_backward(t_mlx *mlx_data);
+void			strafe_left(t_mlx *mlx_data);
+void			strafe_right(t_mlx *mlx_data);
+void			rotate_player(t_player *player, double angle);
 // ========== 2D Map Rendering ==========
 void			render_2d_map(t_mlx *mlx_data);
 void			draw_2d_map_grid(t_mlx *mlx_data);
@@ -226,8 +244,7 @@ void			calculate_map_center_offset(t_mlx *mlx_data, int *offset_x,
 
 // ========== Pixel Utilities ==========
 void			put_pixel_to_image(t_mlx *mlx_data, int x, int y, int color);
-void			draw_rectangle(t_mlx *mlx_data, int x, int y, int width,
-					int height, int color);
+void			draw_rectangle(t_mlx *mlx_data, t_rect rect, int color);
 int				create_rgb_color(int r, int g, int b);
 
 // ========== Cleanup Functions ==========

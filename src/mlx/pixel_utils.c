@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 00:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/15 18:21:11 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/19 12:10:54 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,18 @@ int	create_rgb_color(int r, int g, int b)
 	return ((r << 16) | (g << 8) | b);
 }
 
-void	draw_rectangle(t_mlx *mlx_data, int x, int y, int width, int height,
-		int color)
+void	draw_rectangle(t_mlx *mlx_data, t_rect rect, int color)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < height)
+	while (i < rect.height)
 	{
 		j = 0;
-		while (j < width)
+		while (j < rect.width)
 		{
-			put_pixel_to_image(mlx_data, x + j, y + i, color);
+			put_pixel_to_image(mlx_data, rect.x + j, rect.y + i, color);
 			j++;
 		}
 		i++;

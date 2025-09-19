@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_movement.c                                  :+:      :+:    :+:   */
+/*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 18:20:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/19 10:53:12 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/19 12:33:50 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	can_move_to(t_mlx *mlx_data, double new_x, double new_y)
 	return (1);
 }
 
-static void	move_player(t_mlx *mlx_data, double move_x, double move_y)
+void	move_player(t_mlx *mlx_data, double move_x, double move_y)
 {
 	t_player	*player;
 	double		new_x;
@@ -72,7 +72,7 @@ static void	move_player(t_mlx *mlx_data, double move_x, double move_y)
 	}
 }
 
-static void	rotate_player(t_player *player, double angle)
+void	rotate_player(t_player *player, double angle)
 {
 	double	old_dir_x;
 	double	old_plane_x;
@@ -87,92 +87,4 @@ static void	rotate_player(t_player *player, double angle)
 	player->dir_y = old_dir_x * sin_angle + player->dir_y * cos_angle;
 	player->plane_x = player->plane_x * cos_angle - player->plane_y * sin_angle;
 	player->plane_y = old_plane_x * sin_angle + player->plane_y * cos_angle;
-}
-
-static void	move_forward(t_mlx *mlx_data)
-{
-	t_player	*player;
-	double		move_x;
-	double		move_y;
-
-	player = &mlx_data->map_data->player;
-	move_x = player->dir_x * MOVE_SPEED;
-	move_y = player->dir_y * MOVE_SPEED;
-	move_player(mlx_data, move_x, move_y);
-}
-
-static void	move_backward(t_mlx *mlx_data)
-{
-	t_player	*player;
-	double		move_x;
-	double		move_y;
-
-	player = &mlx_data->map_data->player;
-	move_x = -player->dir_x * MOVE_SPEED;
-	move_y = -player->dir_y * MOVE_SPEED;
-	move_player(mlx_data, move_x, move_y);
-}
-
-static void	strafe_left(t_mlx *mlx_data)
-{
-	t_player	*player;
-	double		move_x;
-	double		move_y;
-
-	player = &mlx_data->map_data->player;
-	move_x = player->dir_y * MOVE_SPEED;
-	move_y = -player->dir_x * MOVE_SPEED;
-	move_player(mlx_data, move_x, move_y);
-}
-
-static void	strafe_right(t_mlx *mlx_data)
-{
-	t_player	*player;
-	double		move_x;
-	double		move_y;
-
-	player = &mlx_data->map_data->player;
-	move_x = -player->dir_y * MOVE_SPEED;
-	move_y = player->dir_x * MOVE_SPEED;
-	move_player(mlx_data, move_x, move_y);
-}
-
-int	handle_continuous_movement(t_mlx *mlx_data)
-{
-	int	moved;
-
-	moved = 0;
-	if (mlx_data->keys.w)
-	{
-		move_forward(mlx_data);
-		moved = 1;
-	}
-	if (mlx_data->keys.s)
-	{
-		move_backward(mlx_data);
-		moved = 1;
-	}
-	if (mlx_data->keys.a)
-	{
-		strafe_left(mlx_data);
-		moved = 1;
-	}
-	if (mlx_data->keys.d)
-	{
-		strafe_right(mlx_data);
-		moved = 1;
-	}
-	if (mlx_data->keys.left)
-	{
-		rotate_player(&mlx_data->map_data->player, -ROTATION_SPEED);
-		moved = 1;
-	}
-	if (mlx_data->keys.right)
-	{
-		rotate_player(&mlx_data->map_data->player, ROTATION_SPEED);
-		moved = 1;
-	}
-	if (moved && mlx_data->show_2d_map)
-		render_2d_map(mlx_data);
-	return (0);
 }

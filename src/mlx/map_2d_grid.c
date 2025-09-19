@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/15 18:30:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/15 18:32:43 by igngonza         ###   ########.fr       */
+/*   Created: 2025/09/19 12:02:54 by igngonza          #+#    #+#             */
+/*   Updated: 2025/09/19 12:32:44 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,50 +39,71 @@ static int	get_tile_color(char cell)
 
 static void	draw_wall_borders(t_mlx *mlx_data, int x, int y)
 {
-	int	border_color;
+	int		border_color;
+	t_rect	rect;
 
 	border_color = 0x654321;
-	draw_rectangle(mlx_data, x, y, TILE_SIZE, 1, border_color);
-	draw_rectangle(mlx_data, x, y, 1, TILE_SIZE, border_color);
-	draw_rectangle(mlx_data, x + TILE_SIZE - 1, y, 1, TILE_SIZE, border_color);
-	draw_rectangle(mlx_data, x, y + TILE_SIZE - 1, TILE_SIZE, 1, border_color);
+	rect.x = x;
+	rect.y = y;
+	rect.width = TILE_SIZE;
+	rect.height = 1;
+	draw_rectangle(mlx_data, rect, border_color);
+	rect.x = x;
+	rect.y = y;
+	rect.width = 1;
+	rect.height = TILE_SIZE;
+	draw_rectangle(mlx_data, rect, border_color);
+	rect.x = x + TILE_SIZE - 1;
+	rect.y = y;
+	rect.width = 1;
+	rect.height = TILE_SIZE;
+	draw_rectangle(mlx_data, rect, border_color);
+	rect.x = x;
+	rect.y = y + TILE_SIZE - 1;
+	rect.width = TILE_SIZE;
+	rect.height = 1;
+	draw_rectangle(mlx_data, rect, border_color);
 }
 
 static void	draw_single_tile(t_mlx *mlx_data, int map_x, int map_y,
-		int offset_x, int offset_y)
+		t_offset offset)
 {
 	int		screen_x;
 	int		screen_y;
 	char	cell;
 	int		color;
+	t_rect	rect;
 
-	screen_x = offset_x + (map_x * TILE_SIZE);
-	screen_y = offset_y + (map_y * TILE_SIZE);
+	screen_x = offset.x + (map_x * TILE_SIZE);
+	screen_y = offset.y + (map_y * TILE_SIZE);
 	if (map_x < (int)ft_strlen(mlx_data->map_data->map[map_y]))
 		cell = mlx_data->map_data->map[map_y][map_x];
 	else
 		cell = ' ';
 	color = get_tile_color(cell);
-	draw_rectangle(mlx_data, screen_x, screen_y, TILE_SIZE, TILE_SIZE, color);
+	rect.x = screen_x;
+	rect.y = screen_y;
+	rect.width = TILE_SIZE;
+	rect.height = TILE_SIZE;
+	draw_rectangle(mlx_data, rect, color);
 	if (cell == '1')
 		draw_wall_borders(mlx_data, screen_x, screen_y);
 }
 
 void	draw_2d_map_grid(t_mlx *mlx_data)
 {
-	int	x;
-	int	y;
-	int	offset_x;
-	int	offset_y;
+	int			x;
+	int			y;
+	t_offset	offset;
 
-	calculate_map_center_offset(mlx_data, &offset_x, &offset_y);
+	calculate_map_center_offset(mlx_data, &offset.x, &offset.y);
 	y = 0;
 	while (y < mlx_data->map_data->map_height)
 	{
 		x = 0;
 		while (x < mlx_data->map_data->map_width)
 		{
-			draw_single_tile(mlx_data, x, y, offset_x, offset_y);
+			draw_single_tile(mlx_data, x, y, offset);
 			x++;
 		}
 		y++;
