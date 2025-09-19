@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 18:30:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/15 18:34:03 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/18 13:46:11 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	get_player_screen_pos(t_mlx *mlx_data, int *screen_x, int *screen_y)
 	int	player_size;
 
 	calculate_map_center_offset(mlx_data, &offset_x, &offset_y);
-	player_size = TILE_SIZE / 3;
+	player_size = TILE_SIZE / 2;
 	*screen_x = offset_x + (int)(mlx_data->map_data->player.pos_x * TILE_SIZE)
 		- player_size / 2;
 	*screen_y = offset_y + (int)(mlx_data->map_data->player.pos_y * TILE_SIZE)
@@ -30,7 +30,7 @@ static void	draw_player_square(t_mlx *mlx_data, int screen_x, int screen_y)
 {
 	int	player_size;
 
-	player_size = TILE_SIZE / 3;
+	player_size = TILE_SIZE / 2;
 	draw_rectangle(mlx_data, screen_x, screen_y, player_size, player_size,
 		MAP_2D_COLOR_PLAYER);
 }
@@ -46,7 +46,7 @@ static void	draw_direction_line(t_mlx *mlx_data, int screen_x, int screen_y)
 	int	point_x;
 	int	point_y;
 
-	player_size = TILE_SIZE / 3;
+	player_size = TILE_SIZE / 2;
 	center_x = screen_x + player_size / 2;
 	center_y = screen_y + player_size / 2;
 	end_x = center_x + (int)(mlx_data->map_data->player.dir_x * (TILE_SIZE

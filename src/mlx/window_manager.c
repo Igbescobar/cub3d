@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/15 18:34:49 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/18 13:46:44 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,19 @@ int	init_mlx_display(t_mlx *mlx_data)
 
 int	setup_mlx_hooks(t_mlx *mlx_data)
 {
-	mlx_hook(mlx_data->win_ptr, 2, 1L << 0, key_hook, mlx_data);
-	mlx_hook(mlx_data->win_ptr, 17, 0, close_window, mlx_data);
+	mlx_hook(mlx_data->win_ptr, KeyPress, KeyPressMask, key_press_handler,
+		mlx_data);
+	mlx_hook(mlx_data->win_ptr, KeyRelease, KeyReleaseMask, key_release_handler,
+		mlx_data);
+	mlx_hook(mlx_data->win_ptr, DestroyNotify, StructureNotifyMask,
+		close_window, mlx_data);
+	mlx_loop_hook(mlx_data->mlx_ptr, game_loop, mlx_data);
+	return (0);
+}
+
+int	game_loop(t_mlx *mlx_data)
+{
+	handle_continuous_movement(mlx_data);
 	return (0);
 }
 
@@ -52,6 +63,16 @@ int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 {
 	mlx_data->map_data = map_data;
 	mlx_data->show_2d_map = 1;
+	mlx_data->keys.w = 0;
+	mlx_data->keys.a = 0;
+	mlx_data->keys.s = 0;
+	mlx_data->keys.d = 0;
+	mlx_data->keys.m = 0;
+	mlx_data->keys.escape = 0;
+	mlx_data->keys.left = 0;
+	mlx_data->keys.right = 0;
+	mlx_data->keys.up = 0;
+	mlx_data->keys.down = 0;
 	if (init_mlx_display(mlx_data) != 0)
 		return (1);
 	if (load_textures(mlx_data, &map_data->config) != 0)

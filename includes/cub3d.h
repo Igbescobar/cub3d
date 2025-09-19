@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/15 18:21:07 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/19 10:45:52 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include "get_next_line.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -34,16 +37,9 @@
 # define MAP_2D_COLOR_PLAYER 0xFF0000
 # define MAP_2D_OFFSET_X 50
 # define MAP_2D_OFFSET_Y 50
-
-// ========== Key Codes ==========
-# define KEY_M 109
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-
 // ========== Movement ==========
 # define MOVE_SPEED 0.3
+# define ROTATION_SPEED 0.05
 
 // ========== Texture Defines ==========
 # define TEXTURE_NORTH 0
@@ -71,6 +67,21 @@ typedef struct s_player
 	double		plane_x;
 	double		plane_y;
 }				t_player;
+
+// ========== Key State Structure ==========
+typedef struct s_keys
+{
+	int			w;
+	int			a;
+	int			s;
+	int			d;
+	int			m;
+	int			escape;
+	int			left;
+	int			right;
+	int			up;
+	int			down;
+}				t_keys;
 
 typedef struct s_map
 {
@@ -105,6 +116,7 @@ typedef struct s_mlx
 	int			endian;
 	t_map		*map_data;
 	t_texture	textures[4];
+	t_keys		keys;
 	int			show_2d_map;
 }				t_mlx;
 
@@ -174,10 +186,12 @@ int				is_safe_adjacent_position(t_map *map_data, int adj_i,
 int				init_mlx_window(t_mlx *mlx_data, t_map *map_data);
 int				init_mlx_display(t_mlx *mlx_data);
 int				setup_mlx_hooks(t_mlx *mlx_data);
-int				key_hook(int keycode, t_mlx *mlx_data);
+int				key_press_handler(int keycode, t_mlx *mlx_data);
+int				key_release_handler(int keycode, t_mlx *mlx_data);
+int				game_loop(t_mlx *mlx_data);
 int				close_window(t_mlx *mlx_data);
 void			cleanup_mlx(t_mlx *mlx_data);
-void			handle_movement_keys(int keycode, t_mlx *mlx_data);
+int				handle_continuous_movement(t_mlx *mlx_data);
 int				is_valid_position(t_mlx *mlx_data, double new_x, double new_y);
 
 // ========== Texture Functions ==========
