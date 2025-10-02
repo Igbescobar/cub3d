@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/19 12:34:11 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/30 19:43:49 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,27 @@ typedef struct s_texture
 	int			line_length;
 	int			endian;
 }				t_texture;
+
+// ========== Ray Structure ==========
+typedef struct s_ray
+{
+	double		dir_x;
+	double		dir_y;
+	int			map_x;
+	int			map_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+}				t_ray;
 
 // ========== MLX Structures ==========
 typedef struct s_mlx
@@ -234,6 +255,10 @@ void			move_backward(t_mlx *mlx_data);
 void			strafe_left(t_mlx *mlx_data);
 void			strafe_right(t_mlx *mlx_data);
 void			rotate_player(t_player *player, double angle);
+
+// ========== Raycasting Functions ==========
+void			cast_rays(t_mlx *mlx, t_map *map_data);
+
 // ========== 2D Map Rendering ==========
 void			render_2d_map(t_mlx *mlx_data);
 void			draw_2d_map_grid(t_mlx *mlx_data);

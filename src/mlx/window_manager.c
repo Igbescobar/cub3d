@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/18 13:46:44 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/30 21:27:10 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,19 @@ int	setup_mlx_hooks(t_mlx *mlx_data)
 int	game_loop(t_mlx *mlx_data)
 {
 	handle_continuous_movement(mlx_data);
+	clear_image(mlx_data);
+	cast_rays(mlx_data, mlx_data->map_data);
+	if (mlx_data->show_2d_map)
+		render_2d_map(mlx_data);
+	mlx_put_image_to_window(mlx_data->mlx_ptr, mlx_data->win_ptr,
+		mlx_data->img_ptr, 0, 0);
 	return (0);
 }
 
 int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 {
 	mlx_data->map_data = map_data;
-	mlx_data->show_2d_map = 1;
+	mlx_data->show_2d_map = 0;
 	mlx_data->keys.w = 0;
 	mlx_data->keys.a = 0;
 	mlx_data->keys.s = 0;
@@ -82,6 +88,9 @@ int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 	}
 	if (setup_mlx_hooks(mlx_data) != 0)
 		return (1);
-	render_2d_map(mlx_data);
+	clear_image(mlx_data);
+	cast_rays(mlx_data, mlx_data->map_data);
+	mlx_put_image_to_window(mlx_data->mlx_ptr, mlx_data->win_ptr,
+		mlx_data->img_ptr, 0, 0);
 	return (0);
 }

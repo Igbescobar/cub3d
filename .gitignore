@@ -1,3 +1,5 @@
 .vscode
 .DS_Store
 forbidden.xpm
+mlx/Makefile.gen
+mlx/test/Makefile.gen
