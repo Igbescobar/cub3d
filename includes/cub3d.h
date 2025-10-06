@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: igbescobar <igbescobar@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/30 19:43:49 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/10/06 13:21:12 by igbescobar       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ int				is_safe_adjacent_position(t_map *map_data, int adj_i,
 int				init_mlx_window(t_mlx *mlx_data, t_map *map_data);
 int				init_mlx_display(t_mlx *mlx_data);
 int				setup_mlx_hooks(t_mlx *mlx_data);
+void			init_keys(t_keys *keys);
 int				key_press_handler(int keycode, t_mlx *mlx_data);
 int				key_release_handler(int keycode, t_mlx *mlx_data);
 int				game_loop(t_mlx *mlx_data);
@@ -257,7 +258,34 @@ void			strafe_right(t_mlx *mlx_data);
 void			rotate_player(t_player *player, double angle);
 
 // ========== Raycasting Functions ==========
+// Main raycasting controller
 void			cast_rays(t_mlx *mlx, t_map *map_data);
+
+// Ray initialization
+void			init_ray(t_ray *ray, t_player *player, int x);
+void			calculate_step_and_side_dist(t_ray *ray, t_player *player);
+
+// DDA algorithm
+void			perform_dda(t_ray *ray, t_map *map_data);
+
+// Wall calculations
+void			calculate_distance_and_height(t_ray *ray, t_player *player);
+double			calculate_wall_x(t_ray *ray, t_player *player);
+
+// Texture mapping
+int				get_texture_index(t_ray *ray);
+int				get_texture_pixel(t_mlx *mlx, int tex_index, int tex_x, int tex_y);
+int				calculate_texture_x(t_mlx *mlx, t_ray *ray, double wall_x, int tex_index);
+
+// Wall rendering
+void			draw_textured_wall(t_mlx *mlx, int x, t_ray *ray, t_player *player);
+void			draw_vertical_line(t_mlx *mlx, int x, t_ray *ray, t_map *map_data);
+
+// Utility functions
+int				create_rgb_from_config(int color_array[3]);
+int				clamp_texture_coordinate(int coord, int max_val);
+int				validate_ray_direction(t_ray *ray);
+double			calculate_camera_x(int x);
 
 // ========== 2D Map Rendering ==========
 void			render_2d_map(t_mlx *mlx_data);
