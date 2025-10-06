@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: igbescobar <igbescobar@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/30 21:27:10 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/10/06 09:50:43 by igbescobar       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,20 @@ int	setup_mlx_hooks(t_mlx *mlx_data)
 	return (0);
 }
 
+void	init_keys(t_keys *keys)
+{
+	keys->w = 0;
+	keys->a = 0;
+	keys->s = 0;
+	keys->d = 0;
+	keys->m = 0;
+	keys->escape = 0;
+	keys->left = 0;
+	keys->right = 0;
+	keys->up = 0;
+	keys->down = 0;
+}
+
 int	game_loop(t_mlx *mlx_data)
 {
 	handle_continuous_movement(mlx_data);
@@ -69,16 +83,7 @@ int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 {
 	mlx_data->map_data = map_data;
 	mlx_data->show_2d_map = 0;
-	mlx_data->keys.w = 0;
-	mlx_data->keys.a = 0;
-	mlx_data->keys.s = 0;
-	mlx_data->keys.d = 0;
-	mlx_data->keys.m = 0;
-	mlx_data->keys.escape = 0;
-	mlx_data->keys.left = 0;
-	mlx_data->keys.right = 0;
-	mlx_data->keys.up = 0;
-	mlx_data->keys.down = 0;
+	init_keys(&mlx_data->keys);
 	if (init_mlx_display(mlx_data) != 0)
 		return (1);
 	if (load_textures(mlx_data, &map_data->config) != 0)
