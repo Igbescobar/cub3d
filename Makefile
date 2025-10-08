@@ -3,31 +3,40 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+         #
+#    By: igbescobar <igbescobar@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 12:53:54 by igngonza          #+#    #+#              #
-#    Updated: 2025/09/01 10:49:15 by igngonza         ###   ########.fr        #
+#    Updated: 2025/10/06 14:17:17 by igbescobar       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME        := cub3d
 
-CC          := cc
+CC          := cc 
 CFLAGS      := -Wall -Wextra -Werror
+
+
 
 # === Operating System Detection ===
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Linux)
-	IFLAGS      := -Iinclude -Ilibft -Imlx
+	DISTRO := $(shell . /etc/os-release && echo $$ID)
+	
+	ifeq ($(DISTRO), arch)
+		IFLAGS    := -Iinclude -Ilibft -Imlx
+		MLX_FLAGS := -Lmlx -lmlx -lXext -lX11 -lm -lz
+		MLX_CC    := clang
+		CFLAGS    := -Wall -Wextra -Wno-incompatible-pointer-types
+	else
+		IFLAGS    := -Iinclude -Ilibft -Imlx
+		MLX_FLAGS := -Lmlx -lmlx -lXext -lX11 -lm -lz
+		MLX_CC    := $(CC)
+	endif
 else ifeq ($(UNAME_S), Darwin)
-	IFLAGS      := -Iinclude -Ilibft -Imlx -I/opt/X11/include
-endif
-
-ifeq ($(UNAME_S), Linux)
-	MLX_FLAGS := -Lmlx -lmlx -lXext -lX11 -lm -lz
-else ifeq ($(UNAME_S), Darwin)
+	IFLAGS    := -Iinclude -Ilibft -Imlx -I/opt/X11/include
 	MLX_FLAGS := -Lmlx -lmlx -L/opt/X11/lib -lXext -lX11 -lm -lz
+	MLX_CC    := $(CC)
 endif
 
 SRC_DIR     := src
@@ -67,7 +76,7 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(MLX):
-	@$(MAKE) -C $(MLX_DIR)
+	@$(MAKE) -C $(MLX_DIR) CC="$(MLX_CC)"
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
