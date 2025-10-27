@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_mapping.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igbescobar <igbescobar@student.42.fr>      +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 10:00:00 by igbescobar        #+#    #+#             */
-/*   Updated: 2025/10/06 12:26:49 by igbescobar       ###   ########.fr       */
+/*   Updated: 2025/10/27 10:43:40 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

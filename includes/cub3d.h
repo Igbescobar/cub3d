@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igbescobar <igbescobar@student.42.fr>      +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:17:04 by igngonza          #+#    #+#             */
-/*   Updated: 2025/10/06 13:21:12 by igbescobar       ###   ########.fr       */
+/*   Updated: 2025/10/08 15:49:00 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ int				load_map_from_file(const char *filename, t_map *map_data);
 int				validate_enclosure(t_map *map_data);
 int				validate_player(t_map *map_data);
 int				run_all_validations(t_map *map_data);
-void			print_success_message(t_map *map_data);
 
 // ========== Map Parsing ==========
 int				parse_map(const char *filename, t_map *map_data);
@@ -230,7 +229,6 @@ int				game_loop(t_mlx *mlx_data);
 int				close_window(t_mlx *mlx_data);
 void			cleanup_mlx(t_mlx *mlx_data);
 int				handle_continuous_movement(t_mlx *mlx_data);
-int				is_valid_position(t_mlx *mlx_data, double new_x, double new_y);
 
 // ========== Texture Functions ==========
 int				load_textures(t_mlx *mlx_data, t_config *config);
@@ -269,17 +267,21 @@ void			calculate_step_and_side_dist(t_ray *ray, t_player *player);
 void			perform_dda(t_ray *ray, t_map *map_data);
 
 // Wall calculations
-void			calculate_distance_and_height(t_ray *ray, t_player *player);
+void			calculate_distance_and_height(t_ray *ray);
 double			calculate_wall_x(t_ray *ray, t_player *player);
 
 // Texture mapping
 int				get_texture_index(t_ray *ray);
-int				get_texture_pixel(t_mlx *mlx, int tex_index, int tex_x, int tex_y);
-int				calculate_texture_x(t_mlx *mlx, t_ray *ray, double wall_x, int tex_index);
+int				get_texture_pixel(t_mlx *mlx, int tex_index, int tex_x,
+					int tex_y);
+int				calculate_texture_x(t_mlx *mlx, t_ray *ray, double wall_x,
+					int tex_index);
 
 // Wall rendering
-void			draw_textured_wall(t_mlx *mlx, int x, t_ray *ray, t_player *player);
-void			draw_vertical_line(t_mlx *mlx, int x, t_ray *ray, t_map *map_data);
+void			draw_textured_wall(t_mlx *mlx, int x, t_ray *ray,
+					t_player *player);
+void			draw_vertical_line(t_mlx *mlx, int x, t_ray *ray,
+					t_map *map_data);
 
 // Utility functions
 int				create_rgb_from_config(int color_array[3]);

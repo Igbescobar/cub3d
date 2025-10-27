@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   wall_calculation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igbescobar <igbescobar@student.42.fr>      +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 10:00:00 by igbescobar        #+#    #+#             */
-/*   Updated: 2025/10/06 12:26:49 by igbescobar       ###   ########.fr       */
+/*   Updated: 2025/10/27 10:43:31 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	calculate_perpendicular_distance(t_ray *ray, t_player *player)
+static void	calculate_perpendicular_distance(t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - player->pos_x + (1 - ray->step_x)
-				/ 2) / ray->dir_x;
+		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - player->pos_y + (1 - ray->step_y)
-				/ 2) / ray->dir_y;
+		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 }
 
 static void	calculate_wall_height_and_bounds(t_ray *ray)
@@ -33,9 +31,9 @@ static void	calculate_wall_height_and_bounds(t_ray *ray)
 		ray->draw_end = WIN_HEIGHT - 1;
 }
 
-void	calculate_distance_and_height(t_ray *ray, t_player *player)
+void	calculate_distance_and_height(t_ray *ray)
 {
-	calculate_perpendicular_distance(ray, player);
+	calculate_perpendicular_distance(ray);
 	calculate_wall_height_and_bounds(ray);
 }
 
