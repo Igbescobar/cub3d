@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: igbescobar <igbescobar@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 12:00:00 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 16:31:24 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/10/06 09:50:43 by igbescobar       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,47 @@ int	init_mlx_display(t_mlx *mlx_data)
 
 int	setup_mlx_hooks(t_mlx *mlx_data)
 {
-	mlx_key_hook(mlx_data->win_ptr, key_hook, mlx_data);
-	mlx_hook(mlx_data->win_ptr, 17, 0, close_window, mlx_data);
+	mlx_hook(mlx_data->win_ptr, KeyPress, KeyPressMask, key_press_handler,
+		mlx_data);
+	mlx_hook(mlx_data->win_ptr, KeyRelease, KeyReleaseMask, key_release_handler,
+		mlx_data);
+	mlx_hook(mlx_data->win_ptr, DestroyNotify, StructureNotifyMask,
+		close_window, mlx_data);
+	mlx_loop_hook(mlx_data->mlx_ptr, game_loop, mlx_data);
+	return (0);
+}
+
+void	init_keys(t_keys *keys)
+{
+	keys->w = 0;
+	keys->a = 0;
+	keys->s = 0;
+	keys->d = 0;
+	keys->m = 0;
+	keys->escape = 0;
+	keys->left = 0;
+	keys->right = 0;
+	keys->up = 0;
+	keys->down = 0;
+}
+
+int	game_loop(t_mlx *mlx_data)
+{
+	handle_continuous_movement(mlx_data);
+	clear_image(mlx_data);
+	cast_rays(mlx_data, mlx_data->map_data);
+	if (mlx_data->show_2d_map)
+		render_2d_map(mlx_data);
+	mlx_put_image_to_window(mlx_data->mlx_ptr, mlx_data->win_ptr,
+		mlx_data->img_ptr, 0, 0);
 	return (0);
 }
 
 int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 {
 	mlx_data->map_data = map_data;
+	mlx_data->show_2d_map = 0;
+	init_keys(&mlx_data->keys);
 	if (init_mlx_display(mlx_data) != 0)
 		return (1);
 	if (load_textures(mlx_data, &map_data->config) != 0)
@@ -58,8 +91,11 @@ int	init_mlx_window(t_mlx *mlx_data, t_map *map_data)
 		cleanup_mlx(mlx_data);
 		return (1);
 	}
-	print_texture_info(mlx_data);
 	if (setup_mlx_hooks(mlx_data) != 0)
 		return (1);
+	clear_image(mlx_data);
+	cast_rays(mlx_data, mlx_data->map_data);
+	mlx_put_image_to_window(mlx_data->mlx_ptr, mlx_data->win_ptr,
+		mlx_data->img_ptr, 0, 0);
 	return (0);
 }

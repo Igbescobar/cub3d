@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:36:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/09/01 11:58:31 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/09/30 11:12:23 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ int	parsing_handler(int argc, char **argv, t_map *map_data)
 		return (1);
 	if (run_all_validations(map_data) != 0)
 		return (1);
-	print_success_message(map_data);
 	return (0);
 }
