@@ -1,10 +1,4 @@
 # cub3D Overview
-Relevant source files
-- [.gitignore](https://github.com/Igbescobar/cub3d/blob/f988884d/.gitignore)
-- [README.md](https://github.com/Igbescobar/cub3d/blob/f988884d/README.md?plain=1)
-- [includes/cub3d.h](https://github.com/Igbescobar/cub3d/blob/f988884d/includes/cub3d.h)
-- [src/main.c](https://github.com/Igbescobar/cub3d/blob/f988884d/src/main.c)
-
 cub3D is a first-person graphical engine built in C, inspired by the classic Wolfenstein 3D. It utilizes the **Raycasting** technique to render a 2D map into a 3D perspective in real-time. The project is built using the MiniLibX library and follows strict validation rules for map configuration and player movement.
 
 ### Core Engine Workflow
