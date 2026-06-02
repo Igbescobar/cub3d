@@ -135,5 +135,3 @@ classDiagram
 ```
 
 Sources: [includes/cub3d.h50-58](https://github.com/Igbescobar/cub3d/blob/f988884d/includes/cub3d.h#L50-L58)[includes/cub3d.h77-85](https://github.com/Igbescobar/cub3d/blob/f988884d/includes/cub3d.h#L77-L85)[includes/cub3d.h102-109](https://github.com/Igbescobar/cub3d/blob/f988884d/includes/cub3d.h#L102-L109)[includes/cub3d.h145-158](https://github.com/Igbescobar/cub3d/blob/f988884d/includes/cub3d.h#L145-L158)
-
-For a full reference of the repository layout and struct definitions, see **[Project Structure & Key Data Structures](/Igbescobar/cub3d/1.2-project-structure-and-key-data-structures)**.
